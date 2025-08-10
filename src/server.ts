@@ -8,7 +8,7 @@ import swaggerUI from '@fastify/swagger-ui';
 import { Server as SocketIOServer, Socket } from 'socket.io';
 import { PrismaClient, Cota } from "@prisma/client";
 import { z } from 'zod';
-import { ZodTypeProvider } from 'fastify-type-provider-zod';
+import { ZodTypeProvider, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 import bcrypt from 'bcryptjs';
 import { createCipheriv, createDecipheriv, randomBytes, scrypt } from 'crypto';
 import { promisify } from 'util';
@@ -352,6 +352,10 @@ const main = async () => {
   const app = fastify({
     logger: loggerOptions,
   }).withTypeProvider<ZodTypeProvider>();
+
+  // Usa Zod como validador/serializador do Fastify
+  app.setValidatorCompiler(validatorCompiler);
+  app.setSerializerCompiler(serializerCompiler);
 
   app.setErrorHandler(errorHandler);
   
