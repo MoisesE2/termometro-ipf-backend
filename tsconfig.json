@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "types": ["node"],
+    "typeRoots": ["./node_modules/@types", "./types"],
+
+    /* Language and Environment */
+    "target": "ES2022",
+    "lib": ["ES2022"],
+                        /* Control what method is used to detect module-format JS files. */
+
+    /* Modules */
+    "module": "commonjs",
+    "rootDir": "./src",
+              
+    "resolveJsonModule": true,
+
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "./dist",
+    "removeComments": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+
+    /* Type Checking */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+    "exactOptionalPropertyTypes": true,
+
+    "skipLibCheck": true
+  },
+  "include": [
+    "src/**/*", "src/types/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.ts",
+    "**/*.spec.ts",
+    
+  ]
+}
