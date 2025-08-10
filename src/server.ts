@@ -362,7 +362,35 @@ const main = async () => {
   // --- Registro de Plugins ---
   await app.register(jwt, { secret: env.JWT_SECRET, sign: { expiresIn: '7d' } });
   await app.register(helmet, { contentSecurityPolicy: false });
-  await app.register(cors, { origin: env.FRONTEND_URL, credentials: true });
+  // CORS com normalização de origem e suporte a múltiplas URLs em FRONTEND_URL (separadas por vírgula)
+  const allowedOrigins: string[] = env.FRONTEND_URL.split(',')
+    .map((url) => url.trim())
+    .filter((url) => url.length > 0)
+    .map((url) => {
+      try {
+        return new URL(url).origin;
+      } catch {
+        return url.replace(/\/$/, '');
+      }
+    });
+
+  await app.register(cors, {
+    credentials: true,
+    origin: (origin, cb) => {
+      if (!origin) {
+        // Permite chamadas server-to-server e ferramentas locais (sem header Origin)
+        return cb(null, true);
+      }
+      let normalizedOrigin = origin;
+      try {
+        normalizedOrigin = new URL(origin).origin;
+      } catch {
+        normalizedOrigin = origin.replace(/\/$/, '');
+      }
+      const isAllowed = allowedOrigins.includes(normalizedOrigin);
+      cb(isAllowed ? null : new Error('CORS: Origin not allowed'), isAllowed);
+    },
+  });
   await app.register(rateLimit, { max: 100, timeWindow: '1 minute' });
   
   // --- Configuração do Swagger ---
