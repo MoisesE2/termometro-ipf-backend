@@ -381,4 +381,4 @@ interface CotaRequest {
         Autenticação obrigatória para conexões
 
         Validação de eventos do cliente
-"# backend" 
+# backend

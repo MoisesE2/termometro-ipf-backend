@@ -3,7 +3,6 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-pinit*
 
 # Environment variables
 .env
@@ -52,4 +51,3 @@ Thumbs.db
 # Database
 *.sqlite
 *.db 
-/src/generated/prisma
